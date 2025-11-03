@@ -1,12 +1,12 @@
-#!/bin/bash
 
-# === Konfigurasi Awal ===
+# === Konfigurasi Variabel Server Lokal (Sesuaikan dengan setup server Anda) ===
 user="trial$(openssl rand -hex 2 | head -c 4)"
 password="$user"
 duration=60 # dalam menit
 expiration=$(date -d "+$duration minutes" +"%Y-%m-%d %H:%M:%S")
-domain=$(cat /etc/xray/domain 2>/dev/null || hostname -f)
-ip=$(wget -qO- ipv4.icanhazip.com)
+# Ambil domain dan IP dari server (jika belum didefinisikan di bot)
+domain=$2
+ip=$2
 ns_domain=$(cat /etc/xray/dns 2>/dev/null || echo "NS domain not set")
 public_key=$(cat /etc/slowdns/server.pub 2>/dev/null || echo "Public key not available")
 city=$(cat /etc/xray/city 2>/dev/null || echo "Unknown city")
@@ -15,11 +15,12 @@ city=$(cat /etc/xray/city 2>/dev/null || echo "Unknown city")
 useradd -e $(date -d "+$duration minutes" +"%Y-%m-%d") -s /bin/false -M "$user"
 echo "$user:$password" | chpasswd
 
-# === Auto-delete user setelah expired ===
+# === Auto-delete user setelah expired (Menggunakan Tmux) ===
 tmux new-session -d -s "trial_ssh_$user" "sleep $((duration * 60)); userdel $user"
 
-# === Output JSON untuk bot (One-liner Safe Format) ===
+# === Output JSON untuk bot (TERMASUK KUNCI "protocol": "ssh") ===
 jq -n --arg status "success" \
+      --arg protocol "ssh" \
       --arg username "$user" \
       --arg password "$password" \
       --arg ip "$ip" \
@@ -46,6 +47,7 @@ jq -n --arg status "success" \
       --arg wss_payload "GET wss://BUG.COM/ HTTP/1.1[crlf]Host: $domain[crlf]Upgrade: websocket[crlf][crlf]" \
       '{
         status: $status,
+        protocol: $protocol,
         username: $username,
         password: $password,
         ip: $ip,

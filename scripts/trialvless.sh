@@ -3,11 +3,11 @@
 # === Konfigurasi Awal ===
 user="trial$(openssl rand -hex 2 | head -c 4)"
 uuid=$(cat /proc/sys/kernel/random/uuid)
-domain=$(cat /etc/xray/domain 2>/dev/null || hostname -f)
+domain=$2
 ns_domain=$(cat /etc/xray/dns 2>/dev/null || echo "NS domain not set")
 city=$(cat /etc/xray/city 2>/dev/null || echo "Unknown")
 pubkey=$(cat /etc/slowdns/server.pub 2>/dev/null || echo "Not Available")
-ip=$(curl -s ipv4.icanhazip.com)
+ip=$2
 duration=60 # in minutes
 exp=$(date -d "+$duration minutes" +"%Y-%m-%d %H:%M:%S")
 
