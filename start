@@ -157,7 +157,7 @@ EOF
   # 📩 Notifikasi awal ke Admin
   curl -s -X POST https://api.telegram.org/bot$token/sendMessage \
     -d chat_id="$adminid" \
-    -d text="✅ Hai Mas!\n\nAku sudah aktif nih, gunakan /start di bot kamu untuk melihat menu utama ya."
+    -d text="✅ Hai Mas!, Aku sudah aktif nih, gunakan /start di bot ini untuk melihat menu utama ya."
 
   echo -e "${green}Bot VPN telah aktif. Cek Telegram!${neutral}"
 }
