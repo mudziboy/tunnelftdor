@@ -46,8 +46,8 @@ Bot Telegram penjual layanan VPN (SSH, Vmess, Vless, Trojan, Shadowsocks) premiu
 
 1.  **Clone Repositori:**
     ```bash
-    git clone [https://github.com/mudziboy/botv3.git](https://github.com/mudziboy/botv3.git) /root/Botv3
-    cd /root/Botv3
+    git clone [https://github.com/mudziboy/tunnelftdor.git](https://github.com/mudziboy/tunnelftdor.git) /root/tunnelftdor
+    cd /root/tunnelftdor
     ```
 2.  **Jalankan Skrip Instalasi:**
     Gunakan skrip `start` yang akan menginstal dependensi (Node.js, PM2, UFW) dan meminta konfigurasi esensial.
